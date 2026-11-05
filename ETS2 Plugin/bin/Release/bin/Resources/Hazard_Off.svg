@@ -1,0 +1,13 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="glitterDimRed" cx="50%" cy="40%" r="60%" fx="50%" fy="40%">
+    <stop offset="0%" stop-color="#883333"/>
+    <stop offset="50%" stop-color="#5A1A1A"/>
+    <stop offset="100%" stop-color="#1A0000"/>
+  </radialGradient>
+</defs>
+<rect width="80" height="80" fill="#000000"/>
+<polygon points="40,15 20,50 60,50" stroke="url(#glitterDimRed)" stroke-width="5" fill="none" stroke-linejoin="round"/>
+<polygon points="40,26 29,44 51,44" stroke="url(#glitterDimRed)" stroke-width="3" fill="none" stroke-linejoin="round"/>
+<text x="40" y="72" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Hazard</text>
+</svg>

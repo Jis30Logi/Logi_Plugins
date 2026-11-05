@@ -1,0 +1,14 @@
+<svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="glitterBlue" cx="38%" cy="32%" r="65%" fx="38%" fy="32%">
+    <stop offset="0%" stop-color="#AACCFF"/>
+    <stop offset="35%" stop-color="#4499EE"/>
+    <stop offset="70%" stop-color="#1565C0"/>
+    <stop offset="100%" stop-color="#003388"/>
+  </radialGradient>
+</defs>
+<rect width="80" height="80" fill="#000000"/>
+<circle cx="40" cy="34" r="22" fill="url(#glitterBlue)"/>
+<text x="40" y="44" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="30" font-weight="bold">P</text>
+<text x="40" y="72" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Brake</text>
+</svg>

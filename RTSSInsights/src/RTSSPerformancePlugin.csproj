@@ -1,0 +1,111 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>RTSSPerformancePlugin</AssemblyName>
+    <RootNamespace>Loupedeck.RTSSPerformancePlugin</RootNamespace>
+    <OutputType>Library</OutputType>
+    <EnableDefaultCompileItems>true</EnableDefaultCompileItems>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
+    <DebugSymbols Condition="'$(Configuration)' == 'Release'">false</DebugSymbols>
+    <DebugType Condition="'$(Configuration)' == 'Release'">None</DebugType>
+  </PropertyGroup>
+
+  <!--
+    Build identity stamp. The value is recomputed on every build, which changes the generated
+    AssemblyInfo.cs and therefore forces a real recompile, so the DLL on disk can never silently
+    be an older one. RTSSPerformancePlugin logs it in the startup banner: comparing the BuildId in
+    the log against the one in this build output proves which assembly the Logi Plugin Service
+    actually loaded.
+  -->
+  <PropertyGroup>
+    <BuildId>$([System.DateTime]::UtcNow.ToString("yyyyMMdd-HHmmss"))</BuildId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AssemblyMetadata Include="BuildId" Value="$(BuildId)" />
+    <InternalsVisibleTo Include="RTSSPerformancePlugin.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\**\*.svg" />
+    <EmbeddedResource Include="Resources\**\*.png" />
+  </ItemGroup>
+
+  <!--
+    PluginApi.dll ships with the Loupedeck / Logi Plugin Service installation.
+    Override LoupedeckInstallDir in Directory.Build.props if installed elsewhere.
+  -->
+  <ItemGroup>
+    <Reference Include="PluginApi">
+      <HintPath>$(LoupedeckInstallDir)\PluginApi.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="SkiaSharp">
+      <HintPath>$(LoupedeckInstallDir)\SkiaSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Svg.Skia">
+      <HintPath>$(LoupedeckInstallDir)\Svg.Skia.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Svg.Model">
+      <HintPath>$(LoupedeckInstallDir)\Svg.Model.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
+  </ItemGroup>
+
+  <Target Name="CopyProfileHelper" AfterTargets="Build">
+    <ItemGroup>
+      <HelperFiles Include="$(MSBuildThisFileDirectory)..\tools\RTSSProfileHelper\bin\$(Configuration)\RTSSProfileHelper.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(HelperFiles)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" />
+  </Target>
+
+  <!--
+    Deploys a plugin4 package the Logi Plugin Service can actually discover:
+
+      <PluginDir>/metadata/LoupedeckPackage.yaml
+      <PluginDir>/bin/RTSSPerformancePlugin.dll
+
+    The service reads metadata/LoupedeckPackage.yaml and honours its pluginFolderWin. It does
+    NOT read the root .lplug4 (that is the distributable manifest), and it does not look in
+    bin/win. Verified on-device 2026-08-21: the previous layout was skipped silently, producing
+    no log line, no error entry and no crash dump.
+  -->
+  <Target Name="DeployPlugin" AfterTargets="Build" Condition="'$(SkipLoupedeckPluginDeploy)' != 'true'">
+    <ItemGroup>
+      <PluginPayload Include="$(TargetDir)**\*.*" />
+      <PluginPackageMetadata Include="$(MSBuildThisFileDirectory)metadata\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(PluginPayload)" DestinationFolder="$(LoupedeckPluginDir)\bin\%(RecursiveDir)" />
+    <Copy SourceFiles="$(LoupedeckInstallDir)\PluginApi.dll" DestinationFolder="$(LoupedeckPluginDir)\bin\" />
+    <Copy SourceFiles="$(LoupedeckInstallDir)\PluginApi.xml" DestinationFolder="$(LoupedeckPluginDir)\bin\" />
+    <Copy SourceFiles="@(PluginPackageMetadata)" DestinationFolder="$(LoupedeckPluginDir)\metadata\%(RecursiveDir)" />
+  </Target>
+
+  <!--
+    Packages the final .lplug4 distributable package:
+    A plugin4 archive containing metadata/LoupedeckPackage.yaml and bin/*.dll.
+    PluginApi.dll (~15 MB) is deliberately left out: the Logi Plugin Service host supplies it.
+  -->
+  <Target Name="PackagePlugin" AfterTargets="DeployPlugin">
+    <PropertyGroup>
+      <StagingPackageDir>$(TargetDir)staging_package\</StagingPackageDir>
+      <OutputLplugFile>$(MSBuildThisFileDirectory)..\RTSSInsights.lplug4</OutputLplugFile>
+    </PropertyGroup>
+    <RemoveDir Directories="$(StagingPackageDir)" />
+    <MakeDir Directories="$(StagingPackageDir)bin;$(StagingPackageDir)metadata" />
+    <ItemGroup>
+      <StagingBinFiles Include="$(TargetDir)*.*" Exclude="$(TargetDir)*.lplug4;$(TargetDir)*.pdb;$(TargetDir)*.tmp;$(TargetDir)PluginApi.*;$(TargetDir)SkiaSharp.*;$(TargetDir)Svg.*" />
+      <StagingMetaFiles Include="$(MSBuildThisFileDirectory)metadata\**\*.*" />
+    </ItemGroup>
+    <Copy SourceFiles="@(StagingBinFiles)" DestinationFolder="$(StagingPackageDir)bin\" />
+    <Copy SourceFiles="@(StagingMetaFiles)" DestinationFolder="$(StagingPackageDir)metadata\%(RecursiveDir)" />
+    <Delete Files="$(OutputLplugFile)" Condition="Exists('$(OutputLplugFile)')" />
+    <ZipDirectory SourceDirectory="$(StagingPackageDir)" DestinationFile="$(OutputLplugFile)" Overwrite="true" />
+  </Target>
+
+</Project>

@@ -1,0 +1,48 @@
+<Project>
+
+  <PropertyGroup>
+    <!-- Must match the runtime PluginApi.dll targets; the Logi Plugin Service host is .NET 10. -->
+    <TargetFramework>net10.0-windows</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Platforms>AnyCPU</Platforms>
+    <!--
+      AnyCPU, not x64. PluginApi.dll and every plugin the Logi Plugin Service actually loads are
+      AnyCPU (PE32); an x64-specific plugin assembly (PE32+) is rejected with a bare
+      "Cannot load plugin from ...dll" and then disabled, with no further diagnostic.
+      The interop here is bitness-agnostic anyway: Pack=1 structs with explicit widths, and
+      IntPtr/UIntPtr for the kernel32 handles. Verified on-device 2026-08-21.
+    -->
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <EnableDefaultNoneItems>false</EnableDefaultNoneItems>
+    <DebugSymbols Condition="'$(Configuration)' == 'Release'">false</DebugSymbols>
+    <DebugType Condition="'$(Configuration)' == 'Release'">None</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PluginName>RTSSPerformancePlugin</PluginName>
+    <!--
+      Package identity. The Logi Plugin Service derives the plugin name from the Plugin class name
+      with the "Plugin" suffix stripped (RTSSPerformancePlugin -> RTSSPerformance), names the log
+      file after it, and requires the package directory to match. A mismatched folder fails with
+      "plugin package directory does not exist" and the plugin never appears in Options+.
+    -->
+    <LoupedeckPluginId>RTSSPerformance</LoupedeckPluginId>
+    <Product>RTSS Insights</Product>
+    <Company></Company>
+    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.4.0</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
+  </PropertyGroup>
+
+  <!-- Loupedeck / Logi Plugin Service install root. Override with -p:LoupedeckPluginDir=... -->
+  <PropertyGroup>
+    <LoupedeckPluginDir Condition="'$(LoupedeckPluginDir)' == ''">$(LOCALAPPDATA)\Logi\LogiPluginService\Plugins\$(LoupedeckPluginId)</LoupedeckPluginDir>
+    <LoupedeckInstallDir Condition="'$(LoupedeckInstallDir)' == ''">$(ProgramFiles)\Logi\LogiPluginService</LoupedeckInstallDir>
+  </PropertyGroup>
+
+</Project>

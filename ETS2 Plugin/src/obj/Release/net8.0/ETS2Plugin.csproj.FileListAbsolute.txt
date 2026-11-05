@@ -1,0 +1,5 @@
+C:\Users\js\ETS2 Plugin\src\obj\Release\net8.0\ETS2Plugin.csproj.AssemblyReference.cache
+C:\Users\js\ETS2 Plugin\src\obj\Release\net8.0\ETS2Plugin.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\js\ETS2 Plugin\src\obj\Release\net8.0\ETS2Plugin.AssemblyInfoInputs.cache
+C:\Users\js\ETS2 Plugin\src\obj\Release\net8.0\ETS2Plugin.AssemblyInfo.cs
+C:\Users\js\ETS2 Plugin\src\obj\Release\net8.0\ETS2Plugin.csproj.CoreCompileInputs.cache

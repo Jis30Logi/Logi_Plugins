@@ -1,0 +1,20 @@
+<svg width="80" height="80" viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs>
+  <radialGradient id="glitterGrey" cx="38%" cy="32%" r="65%" fx="38%" fy="32%" gradientUnits="objectBoundingBox">
+    <stop offset="0%" stop-color="#EEEEEE"/>
+    <stop offset="35%" stop-color="#CCCCCC"/>
+    <stop offset="70%" stop-color="#AAAAAA"/>
+    <stop offset="100%" stop-color="#666666"/>
+  </radialGradient>
+</defs>
+<rect width="1000" height="1000" fill="#000000"/>
+<g transform="translate(110,0) scale(0.78)">
+  <path d="M310 525C327.5 540 350 550 375 550C400 550 422.5 540 440 525" stroke="url(#glitterGrey)" stroke-width="32" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M560 525C577.5 540 600 550 625 550C650 550 672.5 540 690 525" stroke="url(#glitterGrey)" stroke-width="32" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M500 600C457.5 600 425 632.5 425 675H575C575 632.5 542.5 600 500 600Z" stroke="url(#glitterGrey)" stroke-width="32" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M625 200C587.5 185 545 175 500 175C320 175 175 320 175 500C175 680 320 825 500 825C680 825 825 680 825 500C825 465 820 432.5 810 400" stroke="url(#glitterGrey)" stroke-width="74" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M600 325H675L600 400H675" stroke="url(#glitterGrey)" stroke-width="32" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M725 200H820L730 300H825" stroke="url(#glitterGrey)" stroke-width="32" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<text x="500" y="930" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="138" font-weight="bold">Rest</text>
+</svg>

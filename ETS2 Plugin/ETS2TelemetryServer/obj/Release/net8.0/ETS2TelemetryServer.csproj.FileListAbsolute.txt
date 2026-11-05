@@ -1,0 +1,5 @@
+C:\Users\js\ETS2 Plugin\ETS2TelemetryServer\obj\Release\net8.0\ETS2TelemetryServer.csproj.AssemblyReference.cache
+C:\Users\js\ETS2 Plugin\ETS2TelemetryServer\obj\Release\net8.0\ETS2TelemetryServer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\js\ETS2 Plugin\ETS2TelemetryServer\obj\Release\net8.0\ETS2TelemetryServer.AssemblyInfoInputs.cache
+C:\Users\js\ETS2 Plugin\ETS2TelemetryServer\obj\Release\net8.0\ETS2TelemetryServer.AssemblyInfo.cs
+C:\Users\js\ETS2 Plugin\ETS2TelemetryServer\obj\Release\net8.0\ETS2TelemetryServer.csproj.CoreCompileInputs.cache

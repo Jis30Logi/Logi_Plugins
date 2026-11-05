@@ -1,0 +1,4 @@
+c:\Users\js\ETS2 Plugin\src\obj\Debug\net8.0\CheckRes.GeneratedMSBuildEditorConfig.editorconfig
+c:\Users\js\ETS2 Plugin\src\obj\Debug\net8.0\CheckRes.AssemblyInfoInputs.cache
+c:\Users\js\ETS2 Plugin\src\obj\Debug\net8.0\CheckRes.AssemblyInfo.cs
+c:\Users\js\ETS2 Plugin\src\obj\Debug\net8.0\CheckRes.csproj.CoreCompileInputs.cache

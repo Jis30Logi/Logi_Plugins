@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>ETS2 Plugin — Project Overview</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #0b0f17;
+    display: flex;
+    justify-content: center;
+    padding: 40px;
+  }
+  /* 16:9 canvas — screenshot this element for a slide */
+  .board {
+    width: 1600px;
+    height: 900px;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, #16233b 0%, transparent 60%),
+      radial-gradient(1000px 500px at 100% 120%, #1a2a1f 0%, transparent 55%),
+      #0b0f17;
+    border-radius: 20px;
+    padding: 46px 54px;
+    color: #e9eef5;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #1e2a3d;
+  }
+  .header { display: flex; align-items: center; gap: 20px; }
+  .badge {
+    background: #107C10; color: #fff; font-weight: 700; font-size: 15px;
+    padding: 7px 16px; border-radius: 999px; letter-spacing: .5px;
+  }
+  h1 { font-size: 40px; font-weight: 800; letter-spacing: -.5px; }
+  .sub { color: #9fb0c7; font-size: 18px; margin-top: 6px; }
+
+  .grid { display: grid; grid-template-columns: 560px 1fr; gap: 40px; margin-top: 34px; }
+
+  .panel-title { font-size: 15px; text-transform: uppercase; letter-spacing: 2px; color: #6f83a0; margin-bottom: 16px; font-weight: 700; }
+
+  /* Device mock */
+  .device {
+    background: linear-gradient(160deg, #23272e, #14171c);
+    border-radius: 22px; padding: 22px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.06);
+    border: 1px solid #2c313a;
+  }
+  .keys { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .key {
+    aspect-ratio: 1; border-radius: 12px; overflow: hidden;
+    background: #000; box-shadow: 0 4px 10px rgba(0,0,0,.5), inset 0 0 0 1px #2f343d;
+  }
+  .key svg { width: 100%; height: 100%; display: block; }
+  .device-label { text-align: center; color: #7c8aa0; font-size: 13px; margin-top: 16px; letter-spacing: 1px; }
+
+  /* Architecture flow */
+  .flow { display: flex; flex-direction: column; gap: 14px; }
+  .node {
+    display: flex; align-items: center; gap: 16px;
+    background: #121a28; border: 1px solid #22314a; border-radius: 14px;
+    padding: 16px 20px;
+  }
+  .node .ico {
+    width: 46px; height: 46px; border-radius: 10px; flex: 0 0 46px;
+    display: flex; align-items: center; justify-content: center; font-size: 24px;
+  }
+  .node .txt b { font-size: 18px; display: block; }
+  .node .txt span { color: #9fb0c7; font-size: 14px; }
+  .arrow { text-align: center; color: #3f5473; font-size: 20px; line-height: 4px; height: 4px; }
+  .c1 { background: #2a1f14; } .c2 { background: #14202a; }
+  .c3 { background: #1a2a1f; } .c4 { background: #1f1a2a; } .c5 { background: #2a1420; }
+  .hl { color: #4CE870; font-weight: 700; }
+
+  /* Tech chips */
+  .tech { margin-top: 30px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+  .chip {
+    background: #101826; border: 1px solid #24334c; color: #cdd9ea;
+    padding: 9px 16px; border-radius: 10px; font-size: 15px; font-weight: 600;
+  }
+  .chip b { color: #4CE870; }
+  .foot { position: absolute; bottom: 22px; right: 30px; color: #465468; font-size: 13px; }
+</style>
+</head>
+<body>
+<div class="board">
+  <div class="header">
+    <span class="badge">GAMING</span>
+    <div>
+      <h1>ETS2 Live Dashboard Plugin</h1>
+      <div class="sub">Real-time Euro Truck Simulator 2 telemetry on the Logitech MX Creative Console</div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: device with real icons -->
+    <div>
+      <div class="panel-title">What the driver sees</div>
+      <div class="device">
+        <div class="keys">
+          <div class="key"><svg viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="1000" height="1000" fill="#000000"/><g clip-path="url(#clipSpeed)"><path d="M329.026 413.23C329.192 410.661 328.329 408.129 326.63 406.196L249.715 318.691C248.015 316.758 245.617 315.579 243.046 315.413C240.464 315.248 237.945 316.109 236.012 317.809C200.669 348.875 171.333 385.513 148.814 426.704C147.58 428.964 147.291 431.622 148.015 434.091C148.74 436.562 150.415 438.644 152.676 439.878L254.904 495.758C256.383 496.567 257.979 496.95 259.554 496.95C262.988 496.95 266.317 495.122 268.081 491.896C282.964 464.67 302.367 440.447 325.746 419.896C327.683 418.199 328.863 415.801 329.026 413.23Z" fill="url(#gSpeed)"/><path d="M363.349 380.823C365.093 384.111 368.456 385.984 371.935 385.984C373.47 385.984 375.026 385.619 376.475 384.851C403.876 370.319 433.353 360.836 464.089 356.666C469.402 355.946 473.126 351.054 472.406 345.741L456.747 230.295C456.026 224.983 451.121 221.264 445.821 221.979C399.144 228.309 354.385 242.707 312.786 264.771C308.05 267.283 306.247 273.158 308.757 277.896L363.349 380.823Z" fill="url(#gSpeed)"/><path d="M238.281 537.052L125.841 506.545C123.356 505.873 120.705 506.211 118.471 507.492C116.237 508.773 114.604 510.888 113.928 513.373C104.688 547.444 100 582.756 100 618.33C100 624.418 100.145 630.525 100.447 637.002C100.689 642.206 104.98 646.261 110.139 646.261C110.29 646.261 110.444 646.258 110.596 646.251L226.976 640.874C229.548 640.756 231.97 639.619 233.702 637.717C235.437 635.815 236.345 633.299 236.225 630.728C236.022 626.36 235.924 622.304 235.924 618.33C235.924 594.775 239.016 571.437 245.112 548.963C246.512 543.789 243.455 538.457 238.281 537.052Z" fill="url(#gSpeed)"/><path d="M673.505 257.837C631.137 237.412 585.871 224.755 538.962 220.208C536.384 219.95 533.84 220.742 531.852 222.377C529.864 224.014 528.609 226.372 528.361 228.936L517.128 344.9C516.61 350.236 520.519 354.982 525.856 355.499C556.774 358.493 586.592 366.831 614.484 380.275C615.81 380.916 617.252 381.24 618.699 381.24C619.779 381.24 620.861 381.058 621.902 380.696C624.332 379.848 626.327 378.066 627.444 375.747L678.033 270.797C680.363 265.968 678.336 260.164 673.505 257.837Z" fill="url(#gSpeed)"/><path d="M844.63 420.703C845.257 418.205 844.87 415.563 843.547 413.351C819.453 373.044 788.733 337.556 752.243 307.879C750.244 306.256 747.694 305.495 745.123 305.752C742.562 306.018 740.21 307.287 738.587 309.284L665.074 399.669C663.451 401.667 662.685 404.228 662.95 406.789C663.213 409.35 664.483 411.701 666.482 413.327C690.626 432.96 710.946 456.432 726.881 483.091C728.7 486.131 731.92 487.82 735.225 487.82C736.92 487.82 738.636 487.376 740.196 486.442L840.197 426.667C842.405 425.346 844 423.201 844.63 420.703Z" fill="url(#gSpeed)"/><path d="M881.757 498.613C880.152 493.495 874.702 490.644 869.59 492.251L758.416 527.085C753.298 528.687 750.451 534.134 752.054 539.249C760.033 564.721 764.079 591.327 764.079 618.327C764.079 622.302 763.979 626.358 763.778 630.724C763.658 633.295 764.565 635.812 766.301 637.714C768.036 639.617 770.455 640.753 773.026 640.87L889.407 646.247C889.561 646.253 889.713 646.257 889.864 646.257C895.02 646.257 899.313 642.201 899.556 636.998C899.855 630.521 900.003 624.414 900.003 618.327C900 577.524 893.864 537.247 881.757 498.613Z" fill="url(#gSpeed)"/><path d="M499.657 597.72C497.982 597.72 496.317 597.775 494.658 597.864L336.946 504.811C333.085 502.53 328.185 503.102 324.951 506.203C321.714 509.303 320.938 514.176 323.047 518.126L409.08 679.375C408.764 682.481 408.595 685.617 408.595 688.78C408.595 713.104 418.067 735.971 435.266 753.17C452.466 770.37 475.334 779.841 499.658 779.841C523.982 779.841 546.849 770.367 564.048 753.17C581.248 735.971 590.718 713.104 590.718 688.78C590.718 664.456 581.246 641.589 564.048 624.39C546.849 607.192 523.98 597.72 499.657 597.72Z" fill="url(#gSpeed)"/></g><text x="500" y="960" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="138" font-weight="bold">Speed</text><defs><radialGradient id="gSpeed" cx="38%" cy="32%" r="65%" fx="38%" fy="32%"><stop offset="0%" stop-color="#AAFFC4"/><stop offset="35%" stop-color="#4CE870"/><stop offset="70%" stop-color="#22C240"/><stop offset="100%" stop-color="#0F8C28"/></radialGradient><clipPath id="clipSpeed"><rect width="800" height="800" fill="white" transform="translate(100 100)"/></clipPath></defs></svg></div>
+          <div class="key"><svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gFuel" cx="38%" cy="32%" r="65%" fx="38%" fy="32%"><stop offset="0%" stop-color="#AAFFC4"/><stop offset="35%" stop-color="#4CE870"/><stop offset="70%" stop-color="#22C240"/><stop offset="100%" stop-color="#0F8C28"/></radialGradient></defs><rect width="500" height="500" fill="#000000"/><path transform="translate(100,40) scale(0.68)" d="M358.036 50L340.178 70.5357L374.107 101.786C375.142 102.82 376.553 104.206 377.678 105.357L370.536 113.393C359.101 124.828 367.305 139.627 371.428 143.75L392.857 165.179V335.714C392.857 364.286 381.653 364.286 378.571 364.286C375.489 364.286 364.286 364.286 364.286 335.714V221.429C364.286 184.831 335.714 164.286 307.143 164.286V107.143C307.143 91.3913 295.008 78.5714 278.571 78.5714H107.143C90.0215 78.5714 78.5713 90.7065 78.5713 107.143V450H307.143V192.857C307.143 192.857 335.714 192.857 335.714 221.429V335.714C335.714 392.857 371.134 392.857 378.571 392.857C386.447 392.857 421.428 392.857 421.428 335.714V135.714C421.428 107.143 413.257 101.165 403.571 91.9643L358.036 50ZM107.143 135.714H278.571V221.429H107.143V135.714Z" fill="url(#gFuel)"/><text x="250" y="460" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="55" font-weight="bold">Fuel</text></svg></div>
+          <div class="key"><svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gEngine" cx="38%" cy="32%" r="65%" fx="38%" fy="32%"><stop offset="0%" stop-color="#AAFFC4"/><stop offset="35%" stop-color="#4CE870"/><stop offset="70%" stop-color="#22C240"/><stop offset="100%" stop-color="#0F8C28"/></radialGradient></defs><rect width="500" height="500" fill="#000000"/><path transform="translate(0,-40)" fill-rule="evenodd" clip-rule="evenodd" d="M191.862 396.159L153.841 358.17H127.669C118.522 358.17 111.035 350.684 111.035 341.536V313.216H95.1823V346.354C95.1823 353.418 89.388 359.212 82.3242 359.212H62.8581C55.7943 359.212 50 353.418 50 346.354V234.049C50 226.986 55.7943 221.191 62.8581 221.191H82.3242C89.388 221.191 95.1823 226.986 95.1823 234.049V267.187H111.035V236.719C111.035 227.572 118.522 220.085 127.669 220.085H155.469L194.759 178.32C199.316 174.349 205.371 172.949 212.435 173.242H374.316C379.915 173.861 384.18 176.009 386.784 180.045C389.388 184.017 388.965 186.263 388.965 190.723V267.187H404.818V234.049C404.818 226.986 410.612 221.191 417.676 221.191H437.142C444.206 221.191 450 226.986 450 234.049V346.354C450 353.418 444.206 359.212 437.142 359.212H417.676C410.612 359.212 404.818 353.418 404.818 346.354V313.216H388.965V316.211C388.965 325.098 389.225 330.469 383.561 337.825C382.487 339.225 381.283 340.56 379.948 341.797L321.908 398.633C319.01 401.855 314.616 403.613 308.822 403.939H209.863C202.474 403.613 196.452 401.074 191.862 396.159ZM257.389 297.135L216.243 293.262L250.358 218.522H297.005L270.54 261.393L318.132 266.667L230.762 371.549L257.389 297.135ZM219.206 96.0286H331.51C338.574 96.0286 344.368 101.823 344.368 108.887V128.353C344.368 135.417 338.574 141.211 331.51 141.211H298.372V157.585H252.344V141.211H219.206C212.142 141.211 206.348 135.417 206.348 128.353V108.887C206.348 101.823 212.142 96.0286 219.206 96.0286Z" fill="url(#gEngine)"/><text x="250" y="460" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="55" font-weight="bold">Engine</text></svg></div>
+          <div class="key"><svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="500" height="500" fill="#000000"/><g clip-path="url(#clipTruck)"><path d="M362.028 287.601C343.328 287.601 328.124 302.776 328.124 321.504C328.124 340.214 343.328 355.389 362.028 355.389C380.737 355.389 395.893 340.214 395.893 321.504C395.893 302.795 380.737 287.601 362.028 287.601ZM362.028 336.392C353.827 336.392 347.15 329.714 347.15 321.504C347.15 313.323 353.818 306.646 362.028 306.646C370.209 306.646 376.896 313.294 376.896 321.504C376.896 329.686 370.209 336.392 362.028 336.392ZM50 309.156H68.6042C68.0677 311.551 67.7324 314.032 67.7324 316.542C67.7324 318.669 67.9719 320.728 68.3551 322.74H50V309.156ZM160.342 309.137H174.51V309.156V322.74H160.514C160.782 320.7 160.983 318.64 160.983 316.542C160.983 314.013 160.734 311.551 160.342 309.137ZM320.575 316.513C320.259 318.573 320.058 320.614 320.058 322.721C320.058 323.995 320.115 325.212 320.24 326.467H178.285V316.513H320.575ZM181.14 142.111L181.13 175.478C180.143 175.478 179.243 175.478 178.285 175.478V304.462V313.687H321.054C325.212 294.661 342.197 280.33 362.478 280.33C381.063 280.33 396.889 292.401 402.599 309.089L404.265 310.152H439.108V272.024H450V142.111H181.14ZM429.547 293.11H424.259V272.005H429.547V293.11ZM404.706 312.969H442.882V322.913H405.061C405.156 321.677 405.243 320.441 405.243 319.167C405.243 317.059 405.051 315.019 404.706 312.969ZM51.2358 236.617V251.485V305.439H51.2454H71.9093C76.8908 285.838 94.6329 271.315 115.728 271.315C136.861 271.315 154.613 285.867 159.546 305.439H174.759V175.248H79.2475L51.2358 236.617ZM164.327 185.144V217.39H127.454L100.17 240.334H63.7184L84.0758 185.144H164.327ZM115.862 285.149C95.7729 285.149 79.5062 301.425 79.5062 321.504C79.5062 341.613 95.7633 357.889 115.862 357.889C135.941 357.889 152.227 341.613 152.227 321.504C152.208 301.415 135.922 285.149 115.862 285.149ZM115.852 337.445C107.068 337.445 99.9018 330.28 99.9018 321.504C99.9018 312.71 107.058 305.563 115.852 305.563C124.666 305.563 131.803 312.71 131.803 321.504C131.803 330.299 124.656 337.445 115.852 337.445Z" fill="url(#gTruck)"/></g><text x="250" y="490" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="55" font-weight="bold">Truck</text><defs><radialGradient id="gTruck" cx="38%" cy="32%" r="65%" fx="38%" fy="32%"><stop offset="0%" stop-color="#AAFFC4"/><stop offset="35%" stop-color="#4CE870"/><stop offset="70%" stop-color="#22C240"/><stop offset="100%" stop-color="#0F8C28"/></radialGradient><clipPath id="clipTruck"><rect width="400" height="400" fill="white" transform="translate(50 50)"/></clipPath></defs></svg></div>
+          <div class="key"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gPark" cx="38%" cy="32%" r="65%" fx="38%" fy="32%"><stop offset="0%" stop-color="#FFCCCC"/><stop offset="35%" stop-color="#FF6666"/><stop offset="70%" stop-color="#DC3535"/><stop offset="100%" stop-color="#990000"/></radialGradient></defs><rect width="80" height="80" fill="#000000"/><circle cx="40" cy="34" r="22" fill="url(#gPark)"/><text x="40" y="44" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="30" font-weight="bold">P</text><text x="40" y="72" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Brake</text></svg></div>
+          <div class="key"><svg viewBox="0 0 1000 1000" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gRest" cx="38%" cy="32%" r="65%" fx="38%" fy="32%"><stop offset="0%" stop-color="#AAFFC4"/><stop offset="35%" stop-color="#4CE870"/><stop offset="70%" stop-color="#22C240"/><stop offset="100%" stop-color="#0F8C28"/></radialGradient></defs><rect width="1000" height="1000" fill="#000000"/><g transform="translate(110,40) scale(0.78)"><path d="M500 112.5C285.938 112.5 112.5 285.938 112.5 500C112.5 714.062 285.938 887.5 500 887.5C714.062 887.5 887.5 714.062 887.5 500C887.5 285.938 714.062 112.5 500 112.5ZM500 812.5C327.656 812.5 187.5 672.344 187.5 500C187.5 327.656 327.656 187.5 500 187.5C672.344 187.5 812.5 327.656 812.5 500C812.5 672.344 672.344 812.5 500 812.5ZM631.25 588.438C598.75 627.5 550.781 650 500 650C449.219 650 401.25 627.656 368.75 588.438C355.469 572.5 331.875 570.469 315.937 583.594C300 596.875 297.969 620.469 311.094 636.406C357.969 692.656 426.875 724.844 500 724.844C573.125 724.844 642.031 692.656 688.906 636.406C702.187 620.469 700 596.875 684.062 583.594C668.125 570.469 644.531 572.5 631.25 588.438ZM325.781 429.688C337.812 408.281 355.781 395.937 375 395.937C394.219 395.937 412.188 408.281 424.219 429.688L439.062 456.25C442.344 462.031 448.75 463.594 453.594 462.031C459.219 460.312 462.969 455 462.5 449.062C457.344 383.281 412.187 337.5 375 337.5C337.813 337.5 292.656 383.281 287.5 449.062C287.031 454.844 290.781 460.312 296.406 462.031C301.719 463.75 307.969 461.25 310.938 456.25L325.781 429.688ZM625 337.5C587.813 337.5 542.656 383.281 537.5 449.062C537.031 454.844 540.781 460.312 546.406 462.031C551.875 463.75 557.969 461.25 560.938 456.25L575.781 429.688C587.812 408.281 605.781 395.937 625 395.937C644.219 395.937 662.188 408.281 674.219 429.688L689.062 456.25C692.344 462.031 698.75 463.594 703.594 462.031C709.219 460.312 712.969 455 712.5 449.062C707.344 383.281 662.187 337.5 625 337.5Z" fill="url(#gRest)"/></g><text x="500" y="930" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="138" font-weight="bold">Rest</text></svg></div>
+          <div class="key"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gHaz" cx="50%" cy="40%" r="60%" fx="50%" fy="40%"><stop offset="0%" stop-color="#FFCCCC"/><stop offset="35%" stop-color="#FF6666"/><stop offset="70%" stop-color="#DC3535"/><stop offset="100%" stop-color="#990000"/></radialGradient></defs><rect width="80" height="80" fill="#000000"/><polygon points="40,15 20,50 60,50" stroke="url(#gHaz)" stroke-width="5" fill="none" stroke-linejoin="round"/><polygon points="40,26 29,44 51,44" stroke="url(#gHaz)" stroke-width="3" fill="none" stroke-linejoin="round"/><text x="40" y="72" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Hazard</text></svg></div>
+          <div class="key"><svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="gLeft" cx="50%" cy="40%" r="60%" fx="50%" fy="40%"><stop offset="0%" stop-color="#FFFACC"/><stop offset="35%" stop-color="#FFE566"/><stop offset="70%" stop-color="#FFB900"/><stop offset="100%" stop-color="#CC8800"/></radialGradient></defs><rect width="80" height="80" fill="#000000"/><polyline points="52,20 28,34 52,48" stroke="url(#gLeft)" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/><text x="40" y="72" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="11" font-weight="bold">Turn</text></svg></div>
+        </div>
+        <div class="device-label">MX CREATIVE CONSOLE — live warning indicators</div>
+      </div>
+
+      <div class="tech">
+        <div class="panel-title" style="margin-top:26px;">Tech Stack</div>
+        <div class="chips">
+          <span class="chip"><b>C#</b> / .NET 8.0</span>
+          <span class="chip">Loupedeck <b>Plugin SDK</b></span>
+          <span class="chip"><b>Shared Memory</b> IPC</span>
+          <span class="chip">SCS Telemetry SDK</span>
+          <span class="chip">Custom <b>SVG</b> icon set</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: architecture flow -->
+    <div>
+      <div class="panel-title">How it works — data pipeline</div>
+      <div class="flow">
+        <div class="node">
+          <div class="ico c1">🎮</div>
+          <div class="txt"><b>Euro Truck Simulator 2</b><span>Game writes live truck state each frame</span></div>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="node">
+          <div class="ico c2">🧠</div>
+          <div class="txt"><b>Shared Memory <span class="hl">Local\SCSTelemetry</span></b><span>Speed, fuel, engine wear, brake, fatigue…</span></div>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="node">
+          <div class="ico c3">⚙️</div>
+          <div class="txt"><b>TelemetryService <span class="hl">(polls every 500&nbsp;ms)</span></b><span>Reads byte offsets → converts units → raises events</span></div>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="node">
+          <div class="ico c4">🧩</div>
+          <div class="txt"><b>Plugin Command Actions</b><span>3-state logic: Offline / Normal / Warning per indicator</span></div>
+        </div>
+        <div class="arrow">▼</div>
+        <div class="node">
+          <div class="ico c5">🖥️</div>
+          <div class="txt"><b>MX Creative Console</b><span>Renders the matching SVG icon on each key</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">Prototype complete · 8 live indicators · updates 2× / second</div>
+</div>
+</body>
+</html>
